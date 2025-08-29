@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fervor Bakes Design System - Cutting-edge pastry elegance */
+
+@layer base {
+  :root {
+    /* Base Colors - Soft ivory foundation */
+    --background: 35 20% 98%;
+    --foreground: 25 15% 15%;
+
+    /* Card System */
+    --card: 35 25% 97%;
+    --card-foreground: 25 15% 15%;
+
+    /* Interactive Elements */
+    --popover: 35 25% 97%;
+    --popover-foreground: 25 15% 15%;
+
+    /* Brand Colors - Deep chocolate sophistication */
+    --primary: 25 25% 20%;
+    --primary-foreground: 35 20% 98%;
+
+    /* Secondary - Muted gold elegance */
+    --secondary: 45 35% 85%;
+    --secondary-foreground: 25 25% 20%;
+
+    /* Subtle tones */
+    --muted: 35 15% 92%;
+    --muted-foreground: 25 10% 55%;
+
+    /* Accent - Dusty rose highlights */
+    --accent: 340 25% 85%;
+    --accent-foreground: 25 25% 20%;
+
+    /* States */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 35 20% 98%;
+
+    /* Borders and inputs */
+    --border: 35 15% 88%;
+    --input: 35 15% 88%;
+    --ring: 25 25% 20%;
+
+    /* Design tokens */
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(35 20% 98%) 0%, hsl(35 15% 95%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(35 25% 97%) 0%, hsl(35 20% 95%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(45 35% 85%) 0%, hsl(340 25% 85%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(25 15% 15% / 0.08);
+    --shadow-elegant: 0 8px 40px -8px hsl(25 15% 15% / 0.12);
+    --shadow-floating: 0 12px 60px -12px hsl(25 15% 15% / 0.15);
+
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-elegant: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Sidebar tokens */
+    --sidebar-background: 35 20% 98%;
+    --sidebar-foreground: 25 15% 15%;
+    --sidebar-primary: 25 25% 20%;
+    --sidebar-primary-foreground: 35 20% 98%;
+    --sidebar-accent: 35 15% 92%;
+    --sidebar-accent-foreground: 25 25% 20%;
+    --sidebar-border: 35 15% 88%;
+    --sidebar-ring: 25 25% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
