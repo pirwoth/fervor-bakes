@@ -26,7 +26,7 @@ const About = () => {
               <div className="flex flex-col items-center text-center md:text-left md:flex-row md:items-start gap-6">
                 <img
                   src="/assets/hero-abstract.jpg"
-                  alt="Giramia Joan Dodrege"
+                  alt="GJD"
                   className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover shadow-md"
                 />
 
