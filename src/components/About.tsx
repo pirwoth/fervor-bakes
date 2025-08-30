@@ -1,13 +1,73 @@
 import { useState, useEffect, useRef } from "react";
 import { Instagram, Facebook, X, Music } from "lucide-react";
+import GJD from "../assets/GJD.jpg";
+import heroImg from "../assets/hero-abstract.jpg";
 
 const About = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [mounted, setMounted] = useState(false);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+  const aboutRef = useRef<HTMLElement | null>(null);
+  const [showBg, setShowBg] = useState(false);
+
+  useEffect(() => {
+    if (showDetails) {
+      // allow the element to render first, then enable the enter animation
+      requestAnimationFrame(() => setMounted(true));
+    } else {
+      // ensure mounted is false when dialog isn't requested
+      setMounted(false);
+    }
+  }, [showDetails]);
+
+  const closeDialog = () => {
+    // play the exit animation, then unmount after the transition duration
+    setMounted(false);
+    setTimeout(() => setShowDetails(false), 300);
+  };
+
+  useEffect(() => {
+    const node = aboutRef.current;
+    if (!node) return;
+
+    const update = (entry: IntersectionObserverEntry) => {
+      const isDesktop = window.innerWidth >= 768;
+      // show when at least 60% of the section is visible on desktop
+      setShowBg(isDesktop && entry.intersectionRatio >= 0.6);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      update(entries[0]);
+    }, { threshold: [0, 0.25, 0.5, 0.6, 0.75, 1] });
+
+    observer.observe(node);
+
+    const onResize = () => {
+      // recompute using bounding rect if needed
+      const rect = node.getBoundingClientRect();
+      const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+      const ratio = visibleHeight > 0 ? visibleHeight / rect.height : 0;
+      setShowBg(window.innerWidth >= 768 && ratio >= 0.6);
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
 
   return (
-    <section id="about" className="py-32 px-6">
+    <section id="about" ref={aboutRef} className="h-screen px-6 relative flex items-center justify-center">
+      {showBg && (
+        <div
+          aria-hidden
+          className="fixed inset-0 z-[-40] bg-center bg-cover bg-no-repeat pointer-events-none md:block hidden"
+          style={{ backgroundImage: `url(${String(heroImg)})`, backgroundAttachment: 'fixed' }}
+        >
+          <div className="absolute inset-0 bg-background/10" />
+        </div>
+      )}
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="fade-in-up">
@@ -25,8 +85,13 @@ const About = () => {
             <div className="bg-gradient-to-br from-card to-secondary/20 rounded-3xl p-8 shadow-elegant floating-animation">
               <div className="flex flex-col items-center text-center md:text-left md:flex-row md:items-start gap-6">
                 <img
-                  src="/assets/hero-abstract.jpg"
-                  alt="GJD"
+                  src={GJD}
+                  alt="Profile — Giramia Joan Dodrege"
+                  loading="lazy"
+                  onError={(e: any) => {
+                    // fallback to bundled hero image if GJD is missing at runtime
+                    e.currentTarget.src = String(heroImg);
+                  }}
                   className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover shadow-md"
                 />
 
@@ -73,14 +138,14 @@ const About = () => {
         </div>
       </div>
 
-      {showDetails && (
+      {(showDetails || mounted) && (
         <div
           role="dialog"
           aria-modal="true"
           className="fixed inset-0 z-50 bg-background/90 flex items-start justify-center p-6 overflow-auto"
           onMouseDown={(e) => {
             // click outside to close: only if backdrop (currentTarget) was clicked
-            if (e.target === e.currentTarget) setShowDetails(false);
+            if (e.target === e.currentTarget) closeDialog();
           }}
         >
           <div
@@ -95,7 +160,7 @@ const About = () => {
                 <p className="text-muted-foreground mt-2">Master Baker &amp; Founder — Fervor Bakes</p>
               </div>
               <button
-                onClick={() => setShowDetails(false)}
+                onClick={closeDialog}
                 className="text-muted-foreground hover:text-primary"
                 aria-label="Close profile details"
               >

@@ -1,22 +1,9 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-abstract.jpg";
-
 const Hero = () => {
-  console.log("Hero component rendering", { heroImage });
-  
   return (
-    <section 
-      id="home" 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${heroImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-background/80"></div>
+  <div className="absolute inset-0 bg-background/0 md:bg-background/10"></div>
       
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <div className="fade-in-up">
